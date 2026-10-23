@@ -10,6 +10,8 @@
   --action-color: #00b894;
   --equals-bg: #00b894;
   --equals-text: #ffffff;
+  --history-bg: #e8ecef;
+  --history-item-bg: #ffffff;
 }
 
 /* Dark Theme Variables */
@@ -24,6 +26,8 @@
   --action-color: #26e7a6;
   --equals-bg: #26e7a6;
   --equals-text: #1a1a24;
+  --history-bg: #1a1c22;
+  --history-item-bg: #292d36;
 }
 
 * {
@@ -49,22 +53,27 @@ body {
   padding: 20px;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
   transition: background-color 0.3s ease;
+  position: relative;
 }
 
-/* Theme Toggle Button Style */
-.theme-toggle {
+/* Top Bar Styling */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.icon-btn {
   background: none;
   border: none;
   font-size: 1.25rem;
   cursor: pointer;
-  margin-bottom: 12px;
-  display: block;
-  margin-left: auto;
   transition: transform 0.2s;
 }
 
-.theme-toggle:hover {
-  transform: scale(1.1);
+.icon-btn:hover {
+  transform: scale(1.15);
 }
 
 /* Display Screen */
@@ -82,6 +91,79 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+/* History Panel Styling */
+.history-panel {
+  background-color: var(--history-bg);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 20px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.history-panel.hidden {
+  display: none;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  color: var(--text-color);
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.clear-history-btn {
+  background: none;
+  border: none;
+  color: var(--operator-color);
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.clear-history-btn:hover {
+  text-decoration: underline;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-item {
+  background-color: var(--history-item-bg);
+  padding: 8px 10px;
+  border-radius: 8px;
+  text-align: right;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.history-item:hover {
+  opacity: 0.8;
+}
+
+.history-expression {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.history-result {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.empty-msg {
+  color: #888;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 10px 0;
 }
 
 /* Button Grid Layout */
