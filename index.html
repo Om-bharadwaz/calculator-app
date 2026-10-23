@@ -3,20 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JS Calculator</title>
+  <title>JS Calculator with History</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="calculator">
-    <!-- Theme Toggle Button -->
-    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle Theme">☀️</button>
+    <!-- Top Bar: Theme Toggle & History Toggle -->
+    <div class="top-bar">
+      <button class="icon-btn" id="historyToggle" onclick="toggleHistory()" aria-label="Toggle History">📜</button>
+      <button class="icon-btn" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle Theme">☀️</button>
+    </div>
 
     <!-- Screen Display -->
     <div class="display" id="display">0</div>
 
+    <!-- History Panel (Hidden by default) -->
+    <div class="history-panel hidden" id="historyPanel">
+      <div class="history-header">
+        <span>History</span>
+        <button class="clear-history-btn" onclick="clearHistory()">Clear All</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <p class="empty-msg">No calculation history yet.</p>
+      </div>
+    </div>
+
     <!-- Buttons Grid -->
-    <div class="buttons">
+    <div class="buttons" id="buttonsGrid">
       <button class="btn btn-action" onclick="clearDisplay()">AC</button>
       <button class="btn btn-action" onclick="deleteLast()">DEL</button>
       <button class="btn btn-operator" onclick="appendValue('/')">÷</button>
