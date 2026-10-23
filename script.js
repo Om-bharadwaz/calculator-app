@@ -1,9 +1,12 @@
 const display = document.getElementById("display");
 const themeToggleBtn = document.getElementById("themeToggle");
+const historyPanel = document.getElementById("historyPanel");
+const historyList = document.getElementById("historyList");
+
+let history = JSON.parse(localStorage.getItem("calcHistory")) || [];
 
 // --- CALCULATOR LOGIC ---
 
-// Append number or operator to display
 function appendValue(input) {
   if (display.innerText === "0" || display.innerText === "Error") {
     display.innerText = input;
@@ -12,12 +15,10 @@ function appendValue(input) {
   }
 }
 
-// Clear display screen (AC)
 function clearDisplay() {
   display.innerText = "0";
 }
 
-// Delete last entered character (DEL)
 function deleteLast() {
   if (display.innerText.length === 1 || display.innerText === "Error") {
     display.innerText = "0";
@@ -26,13 +27,59 @@ function deleteLast() {
   }
 }
 
-// Calculate result
 function calculateResult() {
+  const expression = display.innerText;
   try {
-    display.innerText = eval(display.innerText);
+    const result = eval(expression);
+    
+    // Save to history if valid expression
+    if (expression !== "0" && expression !== result.toString()) {
+      addHistoryItem(expression, result);
+    }
+    
+    display.innerText = result;
   } catch (error) {
     display.innerText = "Error";
   }
+}
+
+// --- HISTORY LOGIC ---
+
+function toggleHistory() {
+  historyPanel.classList.toggle("hidden");
+  renderHistory();
+}
+
+function addHistoryItem(expression, result) {
+  history.unshift({ expression, result }); // Add newest to top
+  if (history.length > 20) history.pop(); // Limit to 20 items
+
+  localStorage.setItem("calcHistory", JSON.stringify(history));
+  renderHistory();
+}
+
+function renderHistory() {
+  if (history.length === 0) {
+    historyList.innerHTML = `<p class="empty-msg">No calculation history yet.</p>`;
+    return;
+  }
+
+  historyList.innerHTML = history.map((item) => `
+    <div class="history-item" onclick="useHistoryResult('${item.result}')">
+      <div class="history-expression">${item.expression} =</div>
+      <div class="history-result">${item.result}</div>
+    </div>
+  `).join("");
+}
+
+function useHistoryResult(value) {
+  display.innerText = value;
+}
+
+function clearHistory() {
+  history = [];
+  localStorage.removeItem("calcHistory");
+  renderHistory();
 }
 
 // --- KEYBOARD SUPPORT ---
@@ -40,25 +87,16 @@ function calculateResult() {
 document.addEventListener("keydown", function (event) {
   const key = event.key;
 
-  // Numbers or decimal
   if (!isNaN(key) || key === ".") {
     appendValue(key);
-  } 
-  // Operators
-  else if (key === "+" || key === "-" || key === "*" || key === "/") {
+  } else if (key === "+" || key === "-" || key === "*" || key === "/") {
     appendValue(key);
-  } 
-  // Enter or '=' calculates
-  else if (key === "Enter" || key === "=") {
+  } else if (key === "Enter" || key === "=") {
     event.preventDefault();
     calculateResult();
-  } 
-  // Backspace deletes last character
-  else if (key === "Backspace") {
+  } else if (key === "Backspace") {
     deleteLast();
-  } 
-  // Escape clears display (AC)
-  else if (key === "Escape") {
+  } else if (key === "Escape") {
     clearDisplay();
   }
 });
@@ -85,6 +123,7 @@ function setTheme(theme) {
   }
 }
 
-// Load saved theme on startup (default to dark)
+// Load saved theme and history on startup
 const savedTheme = localStorage.getItem("theme") || "dark";
 setTheme(savedTheme);
+renderHistory();
