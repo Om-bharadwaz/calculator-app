@@ -1,0 +1,133 @@
+/* Light Theme Variables (Default) */
+:root {
+  --bg-color: #f0f2f5;
+  --calc-bg: #ffffff;
+  --text-color: #333333;
+  --display-bg: #f4f6f9;
+  --btn-bg: #f1f3f6;
+  --btn-hover: #e2e6ec;
+  --operator-color: #ff6b6b;
+  --action-color: #00b894;
+  --equals-bg: #00b894;
+  --equals-text: #ffffff;
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+  --bg-color: #1a1a24;
+  --calc-bg: #22252d;
+  --text-color: #ffffff;
+  --display-bg: #292d36;
+  --btn-bg: #292d36;
+  --btn-hover: #353b48;
+  --operator-color: #ff6b6b;
+  --action-color: #26e7a6;
+  --equals-bg: #26e7a6;
+  --equals-text: #1a1a24;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease;
+}
+
+.calculator {
+  background-color: var(--calc-bg);
+  width: 320px;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+/* Theme Toggle Button Style */
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  margin-bottom: 12px;
+  display: block;
+  margin-left: auto;
+  transition: transform 0.2s;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* Display Screen */
+.display {
+  background-color: var(--display-bg);
+  color: var(--text-color);
+  font-size: 2.5rem;
+  text-align: right;
+  padding: 20px 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  word-wrap: break-word;
+  word-break: break-all;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Button Grid Layout */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.btn {
+  background-color: var(--btn-bg);
+  color: var(--text-color);
+  border: none;
+  font-size: 1.25rem;
+  padding: 18px 0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.btn:hover {
+  background-color: var(--btn-hover);
+}
+
+.btn-action {
+  color: var(--action-color);
+  font-weight: bold;
+}
+
+.btn-operator {
+  color: var(--operator-color);
+  font-size: 1.5rem;
+}
+
+.btn-equals {
+  background-color: var(--equals-bg);
+  color: var(--equals-text);
+  font-weight: bold;
+  grid-row: span 2;
+  height: 100%;
+}
+
+.zero {
+  grid-column: span 2;
+}
